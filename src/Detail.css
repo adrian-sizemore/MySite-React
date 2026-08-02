@@ -132,7 +132,7 @@
 
 .role-summary-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 24px;
   padding: 30px 2px;
@@ -155,16 +155,25 @@
 }
 
 .role h2 {
-  margin-bottom: 0;
+  margin-bottom: 14px;
   color: var(--ink);
   font-size: 1.9rem;
   transition: color 160ms ease;
+}
+
+.role-intro {
+  max-width: 780px;
+}
+
+.role-intro .role-summary {
+  margin: 0;
 }
 
 .role-meta {
   display: flex;
   align-items: center;
   gap: 20px;
+  padding-top: 3px;
 }
 
 .date-range {
@@ -188,13 +197,14 @@
 
 .role-details {
   padding: 0 2px 38px;
+  border-top: 1px solid #e9eef5;
 }
 
 .role-sections {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px 32px;
-  margin-top: 28px;
+  margin-top: 30px;
 }
 
 .role-sections h3,

@@ -59,9 +59,10 @@ export function ExperienceView({ data }) {
       {data.map((role) => (
         <details className="role" key={role.id}>
           <summary className="role-summary-row">
-            <div>
+            <div className="role-intro">
               <p className="eyebrow">{role.company}</p>
               <h2>{role.job_title}</h2>
+              <p className="role-summary">{role.role_summary}</p>
             </div>
             <div className="role-meta">
               <p className="date-range">{formatRange(role)}</p>
@@ -69,7 +70,6 @@ export function ExperienceView({ data }) {
             </div>
           </summary>
           <div className="role-details">
-            <p className="role-summary">{role.role_summary}</p>
             <div className="role-sections">
               {(role.sections || []).map((section) => (
                 <div key={section.id}>
