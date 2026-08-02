@@ -90,13 +90,18 @@ export function MilitaryView({ data }) {
   return (
     <div className="military-list">
       {data.map((service) => (
-        <article key={service.id}>
-          <p className="eyebrow">{formatRange(service) || 'Military service'}</p>
-          <h2>{service.branch}</h2>
-          <h3>{service.role}</h3>
-          {service.summary && <p>{service.summary}</p>}
-          {service.full_description && <p>{service.full_description}</p>}
-        </article>
+        <details className="expandable-card" key={service.id}>
+          <summary>
+            <div>
+              <p className="eyebrow">{formatRange(service) || 'Military service'}</p>
+              <h2>{service.branch}</h2>
+              <h3>{service.role}</h3>
+              {service.summary && <p className="summary">{service.summary}</p>}
+            </div>
+            <span className="role-toggle" aria-hidden="true" />
+          </summary>
+          {service.full_description && <div className="expandable-content"><p>{service.full_description}</p></div>}
+        </details>
       ))}
     </div>
   )
@@ -106,16 +111,23 @@ export function ProjectsView({ data }) {
   return (
     <div className="project-grid">
       {data.map((project) => (
-        <article className="project-card" key={project.id}>
-          <p className="eyebrow">{project.project_type}</p>
-          <h2>{project.name}</h2>
-          <p className="summary">{project.short_summary}</p>
-          <dl>
-            <dt>Problem</dt><dd>{project.problem_statement}</dd>
-            <dt>Approach</dt><dd>{project.solution_summary}</dd>
-            <dt>Outcome</dt><dd>{project.outcome}</dd>
-          </dl>
-        </article>
+        <details className="project-card expandable-card" key={project.id}>
+          <summary>
+            <div>
+              <p className="eyebrow">{project.project_type}</p>
+              <h2>{project.name}</h2>
+              <p className="summary">{project.short_summary}</p>
+            </div>
+            <span className="role-toggle" aria-hidden="true" />
+          </summary>
+          <div className="expandable-content">
+            <dl>
+              <dt>Problem</dt><dd>{project.problem_statement}</dd>
+              <dt>Approach</dt><dd>{project.solution_summary}</dd>
+              <dt>Outcome</dt><dd>{project.outcome}</dd>
+            </dl>
+          </div>
+        </details>
       ))}
     </div>
   )
@@ -125,10 +137,15 @@ function SkillsView({ data }) {
   return (
     <div className="skill-grid">
       {data.map((category) => (
-        <section key={category.id}>
-          <h3>{category.name}</h3>
-          <ul>{category.skills.map((skill) => <li key={skill.id}>{skill.name}</li>)}</ul>
-        </section>
+        <details className="expandable-card" key={category.id}>
+          <summary>
+            <div><h3>{category.name}</h3><p>View related skills and technologies</p></div>
+            <span className="role-toggle" aria-hidden="true" />
+          </summary>
+          <div className="expandable-content">
+            <ul>{category.skills.map((skill) => <li key={skill.id}>{skill.name}</li>)}</ul>
+          </div>
+        </details>
       ))}
     </div>
   )
@@ -137,6 +154,10 @@ function SkillsView({ data }) {
 function ResumeView({ data }) {
   return (
     <div className="resume-view">
+      <div className="resume-download">
+        <div><strong>Complete résumé</strong><span>Download the full document for review or printing.</span></div>
+        <a href="/downloads/adrian-sizemore-resume-2026.docx" download>Download résumé <small>DOCX</small></a>
+      </div>
       {data.profile && (
         <section className="detail-lead">
           <h2>{data.profile.headline}</h2>
@@ -166,11 +187,16 @@ function ResumeFacts({ data }) {
         <section key={title}>
           <h2>{title}</h2>
           {items.map((item) => (
-            <div className="fact" key={item.id}>
-              <strong>{item.name || item.institution || item.organization}</strong>
-              <span>{item.degree || item.issuing_organization || item.role}</span>
+            <details className="fact" key={item.id}>
+              <summary>
+                <div>
+                  <strong>{item.name || item.institution || item.organization}</strong>
+                  <span>{item.degree || item.issuing_organization || item.role}</span>
+                </div>
+                <span className="role-toggle" aria-hidden="true" />
+              </summary>
               <small>{item.field_of_study || item.status}</small>
-            </div>
+            </details>
           ))}
         </section>
       ))}

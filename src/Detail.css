@@ -87,7 +87,7 @@
 
 .detail-card,
 .project-card,
-.military-list article {
+.military-list > * {
   padding: 30px;
   border: 1px solid var(--line);
   background: #fff;
@@ -258,6 +258,72 @@
   line-height: 1.55;
 }
 
+.expandable-card > summary,
+.fact > summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.expandable-card > summary::-webkit-details-marker,
+.fact > summary::-webkit-details-marker {
+  display: none;
+}
+
+.expandable-card[open] > summary .role-toggle,
+.fact[open] > summary .role-toggle {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.expandable-card summary:hover h2,
+.expandable-card summary:hover h3 {
+  color: var(--blue-dark);
+}
+
+.expandable-content {
+  margin-top: 22px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.resume-download {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding: 20px 24px;
+  color: var(--navy);
+  background: #f1f6fc;
+  border-left: 3px solid var(--blue);
+}
+
+.resume-download strong,
+.resume-download span {
+  display: block;
+}
+
+.resume-download a {
+  flex: 0 0 auto;
+  padding: 11px 16px;
+  color: #fff;
+  background: var(--blue-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.resume-download a:hover {
+  background: var(--blue);
+}
+
+.resume-download small {
+  margin-left: 6px;
+  opacity: 0.72;
+}
+
 .section-heading {
   margin: 58px 0 20px;
   color: var(--ink);
@@ -270,7 +336,8 @@
 }
 
 .skill-grid section,
-.fact-grid section {
+.fact-grid section,
+.skill-grid > details {
   padding: 26px;
   border-top: 2px solid var(--blue);
   background: #f8fafc;
@@ -281,13 +348,18 @@
 }
 
 .fact {
-  margin-bottom: 18px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
 }
 
 .fact strong,
 .fact span,
 .fact small {
   display: block;
+}
+
+.fact > small {
+  padding-top: 9px;
 }
 
 @media (max-width: 760px) {
@@ -312,5 +384,14 @@
 
   .date-range {
     white-space: normal;
+  }
+
+  .resume-download {
+    display: block;
+  }
+
+  .resume-download a {
+    display: inline-block;
+    margin-top: 16px;
   }
 }
