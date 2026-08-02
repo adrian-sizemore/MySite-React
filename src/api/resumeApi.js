@@ -1,18 +1,20 @@
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || '/api/v1').replace(/\/$/, '')
+const RESUME_DATA_URL =
+  import.meta.env?.VITE_RESUME_DATA_URL || '/data/resume.json'
 
 export const resourceConfig = {
-  about: { endpoint: 'about', title: 'About' },
-  experience: { endpoint: 'experience', title: 'Professional Experience' },
-  military: { endpoint: 'military-service', title: 'Military Service' },
-  resume: { endpoint: 'resume', title: 'Resume' },
-  projects: { endpoint: 'projects', title: 'Projects' },
-  volunteering: { endpoint: 'volunteering', title: 'Volunteering' },
-  education: { endpoint: 'education', title: 'Education' },
-  certifications: { endpoint: 'certifications', title: 'Certifications' },
-  skills: { endpoint: 'skills', title: 'Skills' },
+  about: { dataKey: 'about', title: 'About' },
+  experience: { dataKey: 'experience', title: 'Professional Experience' },
+  military: { dataKey: 'military_service', title: 'Military Service' },
+  resume: { dataKey: null, title: 'Resume' },
+  projects: { dataKey: 'projects', title: 'Projects' },
+  volunteering: { dataKey: 'volunteering', title: 'Volunteering' },
+  education: { dataKey: 'education', title: 'Education' },
+  certifications: { dataKey: 'certifications', title: 'Certifications' },
+  skills: { dataKey: 'skill_categories', title: 'Skills' },
 }
 
 const responseCache = new Map()
+let resumePayloadCache = null
 const excludedSkills = new Set(['CI/CD'])
 
 function sanitizeSkillCategories(categories = []) {
@@ -44,21 +46,34 @@ export async function fetchResource(resourceKey, signal) {
   if (!config) throw new Error(`Unknown resource: ${resourceKey}`)
   if (responseCache.has(resourceKey)) return responseCache.get(resourceKey)
 
-  const response = await fetch(`${API_BASE}/${config.endpoint}/`, {
-    headers: { Accept: 'application/json' },
-    signal,
-  })
+  if (!resumePayloadCache) {
+    const response = await fetch(RESUME_DATA_URL, {
+      headers: { Accept: 'application/json' },
+      signal,
+    })
 
-  if (response.status === 404) return null
-  if (!response.ok) {
-    throw new Error(`The ${config.title.toLowerCase()} service is unavailable.`)
+    if (!response.ok) {
+      throw new Error(`The ${config.title.toLowerCase()} content is unavailable.`)
+    }
+
+    resumePayloadCache = await response.json()
   }
 
-  const payload = sanitizePayload(resourceKey, await response.json())
+  const selectedPayload = selectResource(resourceKey, resumePayloadCache)
+  const payload = sanitizePayload(resourceKey, selectedPayload)
   responseCache.set(resourceKey, payload)
   return payload
 }
 
+export function selectResource(resourceKey, resumePayload) {
+  const config = resourceConfig[resourceKey]
+  if (!config) throw new Error(`Unknown resource: ${resourceKey}`)
+  return config.dataKey === null
+    ? resumePayload
+    : (resumePayload?.[config.dataKey] ?? null)
+}
+
 export function clearResourceCache(resourceKey) {
   responseCache.delete(resourceKey)
+  resumePayloadCache = null
 }
