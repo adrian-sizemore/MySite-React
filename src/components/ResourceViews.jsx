@@ -155,8 +155,8 @@ function ResumeView({ data }) {
   return (
     <div className="resume-view">
       <div className="resume-download">
-        <div><strong>Complete résumé</strong><span>Download the full document for review or printing.</span></div>
-        <a href="/downloads/adrian-sizemore-resume-2026.docx" download>Download résumé <small>DOCX</small></a>
+        <div><strong>Complete resume</strong><span>Download the full document for review or printing.</span></div>
+        <a href="/downloads/adrian-sizemore-resume-2026.pdf" download>Download resume <small>PDF</small></a>
       </div>
       {data.profile && (
         <section className="detail-lead">
