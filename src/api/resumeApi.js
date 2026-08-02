@@ -1,0 +1,39 @@
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '/api/v1').replace(/\/$/, '')
+
+export const resourceConfig = {
+  about: { endpoint: 'about', title: 'About' },
+  experience: { endpoint: 'experience', title: 'Professional Experience' },
+  military: { endpoint: 'military-service', title: 'Military Service' },
+  resume: { endpoint: 'resume', title: 'Resume' },
+  projects: { endpoint: 'projects', title: 'Projects' },
+  volunteering: { endpoint: 'volunteering', title: 'Volunteering' },
+  education: { endpoint: 'education', title: 'Education' },
+  certifications: { endpoint: 'certifications', title: 'Certifications' },
+  skills: { endpoint: 'skills', title: 'Skills' },
+}
+
+const responseCache = new Map()
+
+export async function fetchResource(resourceKey, signal) {
+  const config = resourceConfig[resourceKey]
+  if (!config) throw new Error(`Unknown resource: ${resourceKey}`)
+  if (responseCache.has(resourceKey)) return responseCache.get(resourceKey)
+
+  const response = await fetch(`${API_BASE}/${config.endpoint}/`, {
+    headers: { Accept: 'application/json' },
+    signal,
+  })
+
+  if (response.status === 404) return null
+  if (!response.ok) {
+    throw new Error(`The ${config.title.toLowerCase()} service is unavailable.`)
+  }
+
+  const payload = await response.json()
+  responseCache.set(resourceKey, payload)
+  return payload
+}
+
+export function clearResourceCache(resourceKey) {
+  responseCache.delete(resourceKey)
+}
