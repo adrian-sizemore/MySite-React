@@ -183,16 +183,18 @@
 }
 
 .role-toggle {
-  width: 12px;
-  height: 12px;
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  margin: 4px 3px 0 0;
+  border-top: 2px solid var(--blue-dark);
   border-right: 2px solid var(--blue-dark);
-  border-bottom: 2px solid var(--blue-dark);
-  transform: rotate(45deg) translateY(-3px);
+  transform: rotate(45deg);
   transition: transform 180ms ease;
 }
 
 .role[open] .role-toggle {
-  transform: rotate(225deg) translate(-2px, -2px);
+  transform: rotate(135deg);
 }
 
 .role-details {
@@ -275,7 +277,7 @@
 
 .expandable-card[open] > summary .role-toggle,
 .fact[open] > summary .role-toggle {
-  transform: rotate(225deg) translate(-2px, -2px);
+  transform: rotate(135deg);
 }
 
 .expandable-card summary:hover h2,
