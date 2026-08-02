@@ -2,35 +2,38 @@
 
 Responsive React/Vite front end for Adrian Sizemore's professional resume and
 portfolio. The homepage uses approved local content and design assets. Detail
-pages load published content from the Django REST Framework API when opened.
+pages read published content from a serializer-approved static resume snapshot.
 
 ## Local development
 
 ```bash
 npm install
+mkdir -p public/data
+cp /path/to/MySite/MySite/files/public/data/resume.json public/data/resume.json
 npm run dev
 ```
 
-Vite proxies `/api` to `http://172.25.139.9:8080` by default. Override the API
-location by copying `.env.example` to `.env.local` and changing:
+The production image performs this copy automatically. To override the
+same-origin snapshot location, copy `.env.example` to `.env.local` and change:
 
 ```text
-VITE_API_BASE_URL=/api/v1
-VITE_API_PROXY_TARGET=http://172.25.139.9:8080
+VITE_RESUME_DATA_URL=/data/resume.json
 ```
 
 ## Validation
 
 ```bash
 npm run lint
+npm test
 npm run build
 ```
 
 ## Content behavior
 
 - The front page does not require the API to render.
-- About, experience, military service, projects, and resume content load only
-  after their links are opened.
+- The browser never connects to the private Django API.
+- About, experience, military service, projects, and resume content are
+  projected from one static `/data/resume.json` aggregate.
 - Empty API collections display a content-coming-soon state.
 - Failed requests display a retry action.
 - Successful responses are cached for the current browser session.

@@ -1,19 +1,19 @@
-# Resume API contract
+# Static resume data contract
 
-Observed from `http://172.25.139.9:8080/api/v1/` on 2026-08-02.
+The Django backend exports the aggregate to `files/public/data/resume.json`.
+The production web-image build copies it to `/data/resume.json`; browsers do
+not connect to Django or any private API endpoint.
 
 ## Loading model
 
 - The homepage renders from approved local content and makes no required API call.
-- A navigation or call-to-action click loads the matching endpoint.
-- `/resume/` is the aggregate endpoint for the complete resume view.
-- Detail endpoints return either one object or a plain array; pagination is not
-  currently enabled.
-- Empty arrays and HTTP 404 responses must render a friendly empty state.
+- A navigation or call-to-action click loads the static aggregate once.
+- Detail views select their corresponding object or array from that aggregate.
+- Empty collections render a friendly empty state.
 
-## Endpoints
+## Aggregate fields
 
-### `/resume/`
+### `/data/resume.json`
 
 Returns one aggregate object with:
 
@@ -27,7 +27,7 @@ Returns one aggregate object with:
 - `military_service`: array
 - `skill_categories`: array
 
-### `/profile/`
+### `profile`
 
 Returns one object with:
 
@@ -42,13 +42,13 @@ Returns one object with:
 - `full_summary`
 - `updated_at`
 
-### `/about/`
+### `about`
 
 Returns one object with `summary`, `introduction`, `updated_at`, and `sections`.
 Each section contains publication and ordering metadata plus `section_type`,
 `title`, `slug`, `summary`, and `body`.
 
-### `/experience/`
+### `experience`
 
 Returns an ordered array of roles. Core fields include:
 
@@ -61,30 +61,30 @@ Returns an ordered array of roles. Core fields include:
 
 Dates are ISO `YYYY-MM-DD` strings. Current-role `end_date` is null.
 
-### `/projects/`
+### `projects`
 
 Returns an ordered array with `name`, `project_type`, `short_summary`,
 `full_description`, `problem_statement`, `solution_summary`, `outcome`,
 repository/demo URLs, dates, and publication/feature flags.
 
-### `/education/`
+### `education`
 
 Returns an ordered array with `institution`, `degree`, `field_of_study`,
 `location`, `status`, `start_date`, `completion_date`, `summary`, and
 `full_description`.
 
-### `/certifications/`
+### `certifications`
 
 Returns an ordered array with `name`, `issuing_organization`,
 `credential_number`, `status`, issued/expiration dates, `verification_url`,
 `summary`, `full_description`, and feature/publication flags.
 
-### `/military-service/`
+### `military_service`
 
 Returns an ordered array with `branch`, `role`, `location`, `start_date`,
 `end_date`, `summary`, `full_description`, and feature/publication flags.
 
-### `/skills/`
+### `skill_categories`
 
 Returns ordered skill-category objects with `name`, `slug`, summaries, and a
 nested `skills` array. Each skill includes `name`, `slug`, optional proficiency
@@ -94,7 +94,7 @@ Current categories are Enterprise Architecture, Networking and Infrastructure,
 Network Automation and Software, Security and Observability, and Operations
 and Leadership.
 
-### `/volunteering/`
+### `volunteering`
 
 Currently returns an empty array. The frontend must not assume records exist.
 
