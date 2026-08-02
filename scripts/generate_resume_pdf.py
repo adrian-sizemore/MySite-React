@@ -68,22 +68,23 @@ def add_bullet(story, value, style):
         story.append(Paragraph(text(value), style, bulletText="•"))
 
 
-def header_footer(canvas, doc, profile):
+def header_footer(canvas, doc, profile, document_label):
     canvas.saveState()
     canvas.setStrokeColor(LINE)
     canvas.line(doc.leftMargin, 0.52 * inch, LETTER[0] - doc.rightMargin, 0.52 * inch)
-    footer = f"{profile.get('full_name', '')} | Complete Resume | Page {doc.page}"
+    footer = f"{profile.get('full_name', '')} | {document_label} | Page {doc.page}"
     canvas.setFillColor(colors.HexColor("#657188"))
     canvas.setFont("Helvetica", 7.5)
     canvas.drawRightString(LETTER[0] - doc.rightMargin, 0.31 * inch, footer)
     canvas.restoreState()
 
 
-def build(input_path, output_path):
+def build(input_path, output_path, brief=False):
     with open(input_path, encoding="utf-8") as stream:
         data = json.load(stream)
 
     profile = data.get("profile") or {}
+    document_label = "Brief Resume" if brief else "Complete Resume"
     style = styles()
     doc = BaseDocTemplate(
         output_path,
@@ -92,11 +93,11 @@ def build(input_path, output_path):
         rightMargin=0.72 * inch,
         topMargin=0.62 * inch,
         bottomMargin=0.68 * inch,
-        title=f"{profile.get('full_name', '')} - Complete Resume",
+        title=f"{profile.get('full_name', '')} - {document_label}",
         author=profile.get("full_name", ""),
     )
     frame = Frame(doc.leftMargin, doc.bottomMargin, doc.width, doc.height, id="resume")
-    doc.addPageTemplates(PageTemplate(id="resume", frames=[frame], onPage=lambda c, d: header_footer(c, d, profile)))
+    doc.addPageTemplates(PageTemplate(id="resume", frames=[frame], onPage=lambda c, d: header_footer(c, d, profile, document_label)))
     story = []
 
     add_paragraph(story, profile.get("full_name"), style["name"])
@@ -115,12 +116,13 @@ def build(input_path, output_path):
         if role.get("role_summary"):
             block.append(Paragraph(text(role["role_summary"]), style["body"]))
         story.append(KeepTogether(block))
-        for section in role.get("sections", []):
-            add_paragraph(story, section.get("title"), style["label"])
-            add_paragraph(story, section.get("body"), style["body"])
-        for accomplishment in role.get("accomplishments", []):
-            statement = accomplishment.get("statement") or accomplishment.get("title")
-            add_bullet(story, statement, style["bullet"])
+        if not brief:
+            for section in role.get("sections", []):
+                add_paragraph(story, section.get("title"), style["label"])
+                add_paragraph(story, section.get("body"), style["body"])
+            for accomplishment in role.get("accomplishments", []):
+                statement = accomplishment.get("statement") or accomplishment.get("title")
+                add_bullet(story, statement, style["bullet"])
         story.append(Spacer(1, 5))
 
     add_paragraph(story, "Projects", style["section"])
@@ -128,10 +130,11 @@ def build(input_path, output_path):
         add_paragraph(story, project.get("name"), style["title"])
         add_paragraph(story, project.get("project_type"), style["meta"])
         add_paragraph(story, project.get("short_summary"), style["body"])
-        for label, key in (("Problem", "problem_statement"), ("Approach", "solution_summary"), ("Outcome", "outcome")):
-            if project.get(key):
-                add_paragraph(story, label, style["label"])
-                add_paragraph(story, project[key], style["body"])
+        if not brief:
+            for label, key in (("Problem", "problem_statement"), ("Approach", "solution_summary"), ("Outcome", "outcome")):
+                if project.get(key):
+                    add_paragraph(story, label, style["label"])
+                    add_paragraph(story, project[key], style["body"])
         story.append(Spacer(1, 5))
 
     add_paragraph(story, "Skills and Technologies", style["section"])
@@ -146,7 +149,8 @@ def build(input_path, output_path):
         add_paragraph(story, f"{service.get('branch', '')} | {service.get('role', '')}", style["title"])
         add_paragraph(story, " | ".join(filter(None, [date_range(service), service.get("location")])), style["meta"])
         add_paragraph(story, service.get("summary"), style["body"])
-        add_paragraph(story, service.get("full_description"), style["body"])
+        if not brief:
+            add_paragraph(story, service.get("full_description"), style["body"])
 
     add_paragraph(story, "Education", style["section"])
     for item in data.get("education", []):
@@ -154,14 +158,16 @@ def build(input_path, output_path):
         degree = " | ".join(filter(None, [item.get("degree"), item.get("field_of_study")]))
         add_paragraph(story, degree, style["body"])
         add_paragraph(story, " | ".join(filter(None, [item.get("status"), date_range(item)])), style["meta"])
-        add_paragraph(story, item.get("full_description") or item.get("summary"), style["body"])
+        if not brief:
+            add_paragraph(story, item.get("full_description") or item.get("summary"), style["body"])
 
     add_paragraph(story, "Certifications", style["section"])
     for item in data.get("certifications", []):
         add_paragraph(story, item.get("name"), style["title"])
         details = " | ".join(filter(None, [item.get("issuing_organization"), item.get("status"), item.get("credential_number")]))
         add_paragraph(story, details, style["meta"])
-        add_paragraph(story, item.get("full_description") or item.get("summary"), style["body"])
+        if not brief:
+            add_paragraph(story, item.get("full_description") or item.get("summary"), style["body"])
 
     if data.get("volunteering"):
         add_paragraph(story, "Volunteering", style["section"])
@@ -177,5 +183,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("input")
     parser.add_argument("output")
+    parser.add_argument("--brief", action="store_true")
     args = parser.parse_args()
-    build(args.input, args.output)
+    build(args.input, args.output, brief=args.brief)

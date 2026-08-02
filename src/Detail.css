@@ -82,6 +82,7 @@
 .accomplishment-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: 20px;
 }
 
@@ -241,6 +242,7 @@
 .project-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: 22px;
 }
 
@@ -315,6 +317,23 @@
   background: var(--blue-dark);
   font-weight: 700;
   text-decoration: none;
+}
+
+.resume-download-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resume-download-actions a:first-child {
+  color: var(--blue-dark);
+  background: #fff;
+  border: 1px solid #b8cbe3;
+}
+
+.resume-download-actions a:first-child:hover {
+  color: #fff;
+  background: var(--blue);
 }
 
 .resume-download a:hover {
@@ -395,5 +414,9 @@
   .resume-download a {
     display: inline-block;
     margin-top: 16px;
+  }
+
+  .resume-download-actions {
+    display: block;
   }
 }
