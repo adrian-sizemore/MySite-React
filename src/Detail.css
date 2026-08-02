@@ -123,25 +123,71 @@
 }
 
 .role {
-  padding: 38px 0;
   border-top: 1px solid var(--line);
 }
 
-.role > header {
+.role:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.role-summary-row {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
+  padding: 30px 2px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.role-summary-row::-webkit-details-marker {
+  display: none;
+}
+
+.role-summary-row:hover h2,
+.role-summary-row:focus-visible h2 {
+  color: var(--blue-dark);
+}
+
+.role-summary-row:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 5px;
 }
 
 .role h2 {
-  margin-bottom: 10px;
+  margin-bottom: 0;
   color: var(--ink);
   font-size: 1.9rem;
+  transition: color 160ms ease;
+}
+
+.role-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .date-range {
+  margin: 0;
   white-space: nowrap;
   font-weight: 650;
+}
+
+.role-toggle {
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid var(--blue-dark);
+  border-bottom: 2px solid var(--blue-dark);
+  transform: rotate(45deg) translateY(-3px);
+  transition: transform 180ms ease;
+}
+
+.role[open] .role-toggle {
+  transform: rotate(225deg) translate(-2px, -2px);
+}
+
+.role-details {
+  padding: 0 2px 38px;
 }
 
 .role-sections {
@@ -245,8 +291,13 @@
     grid-template-columns: 1fr;
   }
 
-  .role > header {
+  .role-summary-row {
     display: block;
+  }
+
+  .role-meta {
+    justify-content: space-between;
+    margin-top: 12px;
   }
 
   .date-range {

@@ -57,25 +57,30 @@ export function ExperienceView({ data }) {
   return (
     <div className="timeline-list">
       {data.map((role) => (
-        <article className="role" key={role.id}>
-          <header>
+        <details className="role" key={role.id}>
+          <summary className="role-summary-row">
             <div>
               <p className="eyebrow">{role.company}</p>
               <h2>{role.job_title}</h2>
             </div>
-            <p className="date-range">{formatRange(role)}</p>
-          </header>
-          <p className="role-summary">{role.role_summary}</p>
-          <div className="role-sections">
-            {(role.sections || []).map((section) => (
-              <div key={section.id}>
-                <h3>{section.title}</h3>
-                <p>{section.body}</p>
-              </div>
-            ))}
+            <div className="role-meta">
+              <p className="date-range">{formatRange(role)}</p>
+              <span className="role-toggle" aria-hidden="true" />
+            </div>
+          </summary>
+          <div className="role-details">
+            <p className="role-summary">{role.role_summary}</p>
+            <div className="role-sections">
+              {(role.sections || []).map((section) => (
+                <div key={section.id}>
+                  <h3>{section.title}</h3>
+                  <p>{section.body}</p>
+                </div>
+              ))}
+            </div>
+            <Accomplishments items={role.accomplishments} />
           </div>
-          <Accomplishments items={role.accomplishments} />
-        </article>
+        </details>
       ))}
     </div>
   )
