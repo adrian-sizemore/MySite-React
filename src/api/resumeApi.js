@@ -13,6 +13,31 @@ export const resourceConfig = {
 }
 
 const responseCache = new Map()
+const excludedSkills = new Set(['CI/CD'])
+
+function sanitizeSkillCategories(categories = []) {
+  return categories.map((category) => ({
+    ...category,
+    skills: (category.skills || []).filter(
+      (skill) => !excludedSkills.has(skill.name),
+    ),
+  }))
+}
+
+function sanitizePayload(resourceKey, payload) {
+  if (resourceKey === 'skills' && Array.isArray(payload)) {
+    return sanitizeSkillCategories(payload)
+  }
+
+  if (resourceKey === 'resume' && payload?.skill_categories) {
+    return {
+      ...payload,
+      skill_categories: sanitizeSkillCategories(payload.skill_categories),
+    }
+  }
+
+  return payload
+}
 
 export async function fetchResource(resourceKey, signal) {
   const config = resourceConfig[resourceKey]
@@ -29,7 +54,7 @@ export async function fetchResource(resourceKey, signal) {
     throw new Error(`The ${config.title.toLowerCase()} service is unavailable.`)
   }
 
-  const payload = await response.json()
+  const payload = sanitizePayload(resourceKey, await response.json())
   responseCache.set(resourceKey, payload)
   return payload
 }

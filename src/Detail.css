@@ -1,0 +1,255 @@
+.detail-page {
+  min-height: calc(100vh - 74px);
+  padding: 52px clamp(28px, 8vw, 130px) 80px;
+}
+
+.detail-heading {
+  max-width: 1040px;
+  margin: 0 auto 46px;
+}
+
+.detail-heading > a {
+  display: inline-block;
+  margin-bottom: 28px;
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.detail-heading h1 {
+  color: var(--ink);
+  font-size: clamp(2.7rem, 5vw, 5rem);
+  letter-spacing: -0.055em;
+}
+
+.status-panel,
+.detail-stack,
+.timeline-list,
+.military-list,
+.project-grid,
+.resume-view {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.status-panel {
+  padding: 42px;
+  background: var(--blue-soft);
+  border: 1px solid #cfe0f5;
+}
+
+.status-panel button {
+  padding: 10px 18px;
+  color: #fff;
+  background: var(--blue);
+  border: 0;
+  cursor: pointer;
+}
+
+.loading-line {
+  width: 70%;
+  height: 13px;
+  display: block;
+  margin-bottom: 12px;
+  background: #d4e3f5;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.loading-line.short {
+  width: 44%;
+}
+
+@keyframes pulse {
+  50% { opacity: 0.45; }
+}
+
+.detail-lead {
+  margin-bottom: 42px;
+  padding: 34px;
+  background: #f1f6fc;
+  border-left: 3px solid var(--blue);
+}
+
+.detail-lead p {
+  color: var(--navy);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.detail-grid,
+.project-grid,
+.skill-grid,
+.fact-grid,
+.accomplishment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.detail-card,
+.project-card,
+.military-list article {
+  padding: 30px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--blue-dark);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.detail-card h2,
+.project-card h2,
+.military-list h2 {
+  color: var(--ink);
+}
+
+.detail-card p,
+.project-card p,
+.role p,
+.military-list p {
+  color: var(--navy);
+  line-height: 1.65;
+}
+
+.summary,
+.role-summary {
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+
+.role {
+  padding: 38px 0;
+  border-top: 1px solid var(--line);
+}
+
+.role > header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.role h2 {
+  margin-bottom: 10px;
+  color: var(--ink);
+  font-size: 1.9rem;
+}
+
+.date-range {
+  white-space: nowrap;
+  font-weight: 650;
+}
+
+.role-sections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 32px;
+  margin-top: 28px;
+}
+
+.role-sections h3,
+.accomplishment h3 {
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.accomplishment-grid {
+  margin-top: 28px;
+}
+
+.accomplishment {
+  padding: 22px;
+  background: #f1f6fc;
+}
+
+.accomplishment > strong {
+  display: block;
+  color: var(--blue-dark);
+  font-size: 1.9rem;
+}
+
+.accomplishment > span,
+.accomplishment small {
+  display: block;
+  color: #53627a;
+}
+
+.military-list,
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.project-card dl {
+  margin-bottom: 0;
+}
+
+.project-card dt {
+  margin-top: 18px;
+  color: var(--ink);
+  font-weight: 750;
+}
+
+.project-card dd {
+  margin: 5px 0 0;
+  color: var(--navy);
+  line-height: 1.55;
+}
+
+.section-heading {
+  margin: 58px 0 20px;
+  color: var(--ink);
+  font-size: 2.1rem;
+}
+
+.skill-grid,
+.fact-grid {
+  margin: 0 auto;
+}
+
+.skill-grid section,
+.fact-grid section {
+  padding: 26px;
+  border-top: 2px solid var(--blue);
+  background: #f8fafc;
+}
+
+.skill-grid li {
+  margin-bottom: 6px;
+}
+
+.fact {
+  margin-bottom: 18px;
+}
+
+.fact strong,
+.fact span,
+.fact small {
+  display: block;
+}
+
+@media (max-width: 760px) {
+  .detail-grid,
+  .project-grid,
+  .military-list,
+  .skill-grid,
+  .fact-grid,
+  .role-sections,
+  .accomplishment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .role > header {
+    display: block;
+  }
+
+  .date-range {
+    white-space: normal;
+  }
+}

@@ -7,12 +7,12 @@ export function useApiResource(resourceKey) {
 
   const retry = useCallback(() => {
     clearResourceCache(resourceKey)
+    setState({ status: 'loading', data: null, error: '' })
     setRequestId((value) => value + 1)
   }, [resourceKey])
 
   useEffect(() => {
     const controller = new AbortController()
-    setState({ status: 'loading', data: null, error: '' })
 
     fetchResource(resourceKey, controller.signal)
       .then((data) => setState({ status: 'success', data, error: '' }))
