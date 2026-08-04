@@ -1,19 +1,19 @@
-# Static resume data contract
+# Resume API contract
 
-The Django backend exports the aggregate to `files/public/data/resume.json`.
-The production web-image build copies it to `/data/resume.json`; browsers do
-not connect to Django or any private API endpoint.
+The browser calls same-origin `/api/v1/*` paths. In production, EC2 nginx
+forwards the allowlisted paths to Django over the private Tailscale connection;
+the browser does not connect directly to a private API address.
 
 ## Loading model
 
 - The homepage renders from approved local content and makes no required API call.
-- A navigation or call-to-action click loads the static aggregate once.
-- Detail views select their corresponding object or array from that aggregate.
+- A navigation or call-to-action click loads its matching API resource once.
+- Detail views render the corresponding API object or array.
 - Empty collections render a friendly empty state.
 
 ## Aggregate fields
 
-### `/data/resume.json`
+### `/api/v1/resume/`
 
 Returns one aggregate object with:
 
@@ -113,3 +113,11 @@ Currently returns an empty array. The frontend must not assume records exist.
 The frontend should not invent replacements for missing backend values. The
 approved static homepage remains stable; API detail views reflect published API
 records after these source-data corrections.
+
+## Private content studio
+
+`POST /api/v1/admin/token/` accepts the administrator username, password, and
+current TOTP authenticator code. MFA-marked bearer tokens authorize the private
+`/api/v1/studio/content/*` routes. Those routes expose every resume model and
+its field schema, retain unpublished draft snapshots, validate model fields at
+publication time, and apply the selected draft order only when records publish.

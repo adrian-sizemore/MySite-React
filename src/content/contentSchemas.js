@@ -1,0 +1,15 @@
+const text = (key, label, type = 'text') => ({ key, label, type })
+const long = (key, label) => text(key, label, 'textarea')
+const flag = (key, label) => text(key, label, 'checkbox')
+
+export const contentSchemas = {
+  profile: [text('full_name', 'Full name'), text('professional_title', 'Professional title'), long('headline', 'Headline'), text('location', 'Location'), text('email', 'Email', 'email'), text('years_of_experience', 'Years of experience', 'number'), long('resume_summary', 'Resume summary'), long('full_summary', 'Full summary')],
+  about: [long('summary', 'Summary'), long('introduction', 'Introduction'), flag('show_opportunity_chip', 'Show opportunity message'), text('opportunity_chip_text', 'Opportunity message'), text('opportunity_chip_color', 'Opportunity message color', 'color')],
+  experience: [text('company', 'Company'), text('job_title', 'Job title'), text('location', 'Location'), text('employment_type', 'Employment type'), text('start_date', 'Start date', 'date'), text('end_date', 'End date', 'date'), flag('is_current', 'Current role'), long('role_summary', 'Role summary'), long('full_description', 'Full description'), flag('is_featured', 'Featured')],
+  'military-service': [text('branch', 'Branch'), text('role', 'Role'), text('location', 'Location'), text('start_date', 'Start date', 'date'), text('end_date', 'End date', 'date'), long('summary', 'Summary'), long('full_description', 'Full description'), flag('is_featured', 'Featured')],
+  projects: [text('name', 'Project name'), text('project_type', 'Project type'), long('short_summary', 'Short summary'), long('full_description', 'Full description'), long('problem_statement', 'Problem'), long('solution_summary', 'Approach'), long('outcome', 'Outcome'), text('repository_url', 'Repository URL', 'url'), text('demo_url', 'Demo URL', 'url'), text('start_date', 'Start date', 'date'), text('end_date', 'End date', 'date'), flag('is_featured', 'Featured')],
+  volunteering: [text('organization', 'Organization'), text('role', 'Role'), text('location', 'Location'), text('start_date', 'Start date', 'date'), text('end_date', 'End date', 'date'), long('summary', 'Summary'), long('full_description', 'Full description')],
+  education: [text('institution', 'Institution'), text('degree', 'Degree'), text('field_of_study', 'Field of study'), text('location', 'Location'), text('status', 'Status'), text('start_date', 'Start date', 'date'), text('completion_date', 'Completion date', 'date'), long('summary', 'Summary'), long('full_description', 'Full description')],
+  certifications: [text('name', 'Certification'), text('issuing_organization', 'Issuing organization'), text('credential_number', 'Credential number'), text('status', 'Status'), text('issued_date', 'Issued date', 'date'), text('expiration_date', 'Expiration date', 'date'), text('verification_url', 'Verification URL', 'url'), long('summary', 'Summary'), long('full_description', 'Full description'), flag('is_featured', 'Featured')],
+  'skill-categories': [text('name', 'Category name'), text('slug', 'Slug'), long('summary', 'Summary'), long('full_description', 'Full description')],
+}

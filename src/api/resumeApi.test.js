@@ -1,23 +1,48 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { selectResource } from './resumeApi.js'
+import {
+  clearResourceCache,
+  fetchResource,
+  resourceConfig,
+} from './resumeApi.js'
 
-const resume = {
-  about: { summary: 'About Adrian' },
-  experience: [{ id: 1 }],
-  military_service: [{ id: 2 }],
-  skill_categories: [{ id: 3 }],
-}
-
-test('projects detail resources from the static aggregate', () => {
-  assert.equal(selectResource('about', resume), resume.about)
-  assert.equal(selectResource('experience', resume), resume.experience)
-  assert.equal(selectResource('military', resume), resume.military_service)
-  assert.equal(selectResource('skills', resume), resume.skill_categories)
-  assert.equal(selectResource('resume', resume), resume)
+test.afterEach(() => {
+  globalThis.fetch = undefined
+  Object.keys(resourceConfig).forEach(clearResourceCache)
 })
 
-test('returns null for an absent aggregate section', () => {
-  assert.equal(selectResource('volunteering', resume), null)
+test('loads each resource through the same-origin API path', async () => {
+  let requestedUrl
+  globalThis.fetch = async (url) => {
+    requestedUrl = url
+    return new Response(JSON.stringify([{ id: 1 }]), {
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
+  assert.deepEqual(await fetchResource('projects'), [{ id: 1 }])
+  assert.equal(requestedUrl, '/api/v1/projects/')
+})
+
+test('returns null when an optional API resource is absent', async () => {
+  globalThis.fetch = async () => new Response(null, { status: 404 })
+
+  assert.equal(await fetchResource('volunteering'), null)
+})
+
+test('filters the unapproved CI/CD skill from API responses', async () => {
+  globalThis.fetch = async () =>
+    new Response(
+      JSON.stringify([
+        {
+          name: 'Automation',
+          skills: [{ name: 'Python' }, { name: 'CI/CD' }],
+        },
+      ]),
+      { headers: { 'Content-Type': 'application/json' } },
+    )
+
+  const categories = await fetchResource('skills')
+  assert.deepEqual(categories[0].skills, [{ name: 'Python' }])
 })

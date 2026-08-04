@@ -4,6 +4,13 @@ const monthFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: 'UTC',
 })
 
+const militaryDateFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+  timeZone: 'UTC',
+})
+
 function formatDate(value) {
   if (!value) return ''
   return monthFormatter.format(new Date(`${value}T00:00:00Z`))
@@ -12,6 +19,16 @@ function formatDate(value) {
 function formatRange(item) {
   const start = formatDate(item.start_date)
   const end = item.is_current ? 'Present' : formatDate(item.end_date)
+  return [start, end].filter(Boolean).join(' – ')
+}
+
+function formatMilitaryRange(item) {
+  const start = item.start_date
+    ? militaryDateFormatter.format(new Date(`${item.start_date}T00:00:00Z`))
+    : ''
+  const end = item.end_date
+    ? militaryDateFormatter.format(new Date(`${item.end_date}T00:00:00Z`))
+    : ''
   return [start, end].filter(Boolean).join(' – ')
 }
 
@@ -28,7 +45,13 @@ function AboutView({ data }) {
             <p className="eyebrow">{section.section_type?.replaceAll('_', ' ')}</p>
             <h2>{section.title}</h2>
             {section.summary && <p className="summary">{section.summary}</p>}
-            <p>{section.body}</p>
+            {(Array.isArray(section.body)
+              ? section.body
+              : section.body?.split(/\n\s*\n/) || [])
+              .filter(Boolean)
+              .map((paragraph, index) => (
+                <p key={`${section.id}-paragraph-${index}`}>{paragraph}</p>
+              ))}
           </article>
         ))}
       </div>
@@ -93,14 +116,23 @@ export function MilitaryView({ data }) {
         <details className="expandable-card" key={service.id}>
           <summary>
             <div>
-              <p className="eyebrow">{formatRange(service) || 'Military service'}</p>
+              <p className="eyebrow">{formatMilitaryRange(service) || 'Military service'}</p>
               <h2>{service.branch}</h2>
               <h3>{service.role}</h3>
               {service.summary && <p className="summary">{service.summary}</p>}
             </div>
             <span className="role-toggle" aria-hidden="true" />
           </summary>
-          {service.full_description && <div className="expandable-content"><p>{service.full_description}</p></div>}
+          {service.full_description && (
+            <div className="expandable-content">
+              {service.full_description
+                .split(/\n\s*\n/)
+                .filter(Boolean)
+                .map((paragraph, index) => (
+                  <p key={`${service.id}-paragraph-${index}`}>{paragraph}</p>
+                ))}
+            </div>
+          )}
         </details>
       ))}
     </div>
@@ -149,6 +181,23 @@ function SkillsView({ data }) {
       ))}
     </div>
   )
+}
+
+function FactsListView({ data, resourceKey }) {
+  const labels = {
+    volunteering: ['organization', 'role'],
+    education: ['institution', 'degree'],
+    certifications: ['name', 'issuing_organization'],
+  }
+  const [titleField, subtitleField] = labels[resourceKey]
+  return <div className="fact-grid single-resource">{data.map((item) => (
+    <section key={item.id}>
+      <p className="eyebrow">{resourceKey.replaceAll('_', ' ')}</p>
+      <h2>{item[titleField]}</h2>
+      <strong>{item[subtitleField]}</strong>
+      {(item.summary || item.full_description) && <p>{item.summary || item.full_description}</p>}
+    </section>
+  ))}</div>
 }
 
 function ResumeView({ data }) {
@@ -212,6 +261,8 @@ export function ResourceView({ resourceKey, data }) {
   if (resourceKey === 'experience') return <ExperienceView data={data} />
   if (resourceKey === 'military') return <MilitaryView data={data} />
   if (resourceKey === 'projects') return <ProjectsView data={data} />
+  if (resourceKey === 'skills') return <SkillsView data={data} />
+  if (['volunteering', 'education', 'certifications'].includes(resourceKey)) return <FactsListView data={data} resourceKey={resourceKey} />
   if (resourceKey === 'resume') return <ResumeView data={data} />
   return <p>Content is available but does not yet have a dedicated view.</p>
 }

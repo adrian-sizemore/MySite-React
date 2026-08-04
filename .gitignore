@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+deploy/.env
+deploy/site/
 public/data/resume.json
 
 # Editor directories and files
