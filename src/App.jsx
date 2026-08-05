@@ -3,6 +3,7 @@ import './App.css'
 import { studioApi } from './api/studioApi'
 import { ContentStudio } from './components/ContentStudio'
 import { ContactPage } from './components/ContactPage'
+import { LabAccessPage } from './components/LabAccessPage'
 import { DetailPage } from './components/DetailPage'
 import { DirectoryPage } from './components/DirectoryPage'
 import { Header } from './components/Header'
@@ -43,12 +44,13 @@ function App() {
       <Header onNavigate={navigate} />
       {route === 'home' && <HomePage onNavigate={navigate} />}
       {route === 'contact' && <ContactPage />}
+      {route === 'access-lab' && <LabAccessPage />}
       {route === 'career' && <DirectoryPage type="career" onNavigate={navigate} />}
       {route === 'learn-more' && <DirectoryPage type="learn" onNavigate={navigate} />}
       {resourceKey && (
         <DetailPage key={resourceKey} resourceKey={resourceKey} onNavigate={navigate} />
       )}
-      {route !== 'home' && !resourceKey && !['studio', 'contact', 'career', 'learn-more'].includes(route) && (
+      {route !== 'home' && !resourceKey && !['studio', 'contact', 'access-lab', 'career', 'learn-more'].includes(route) && (
         <main className="detail-page">
           <div className="status-panel">
             <h1>Page not found</h1>

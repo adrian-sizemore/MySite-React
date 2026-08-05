@@ -594,6 +594,18 @@
 }
 
 .lab-access-link { color: var(--blue-dark) !important; }
+.lab-access-page { min-height: calc(100vh - 74px); display: grid; grid-template-columns: minmax(320px, .9fr) minmax(520px, 1.1fr); gap: clamp(40px, 7vw, 100px); padding: clamp(56px, 8vw, 110px) clamp(28px, 7vw, 112px); background: linear-gradient(135deg, #edf5ff 0%, #f8fbff 46%, #fff 100%); }
+.lab-access-intro { align-self: start; }
+.lab-access-intro h1 { max-width: 620px; margin-bottom: 24px; color: var(--ink); font-size: clamp(3rem, 5.5vw, 5.6rem); line-height: .94; letter-spacing: -.06em; }
+.lab-access-intro > p:not(.eyebrow) { max-width: 610px; color: #4d5e75; font-size: 1.08rem; line-height: 1.75; }
+.lab-access-details { display: grid; gap: 0; margin-top: 40px; border-top: 1px solid #bfd0e4; }
+.lab-access-details > div { display: grid; gap: 5px; padding: 18px 0; border-bottom: 1px solid #bfd0e4; }
+.lab-access-details strong { color: var(--navy); }
+.lab-access-details span { color: #627188; line-height: 1.5; }
+.lab-registration-panel { align-self: start; padding: clamp(26px, 4vw, 46px); border: 1px solid var(--line); background: white; box-shadow: 0 24px 65px rgba(20, 33, 58, .1); }
+.lab-form-heading { margin-bottom: 30px; }
+.lab-form-heading h2 { margin-bottom: 9px; color: var(--ink); font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -.04em; }
+.lab-form-heading > p:last-child { color: #64738a; line-height: 1.55; }
 .login-link { border: 1px solid var(--navy); border-radius: 999px; padding: 7px 14px; text-decoration: none; }
 .auth-page, .studio-loading { min-height: 100vh; display: grid; place-items: center; padding: 28px; background: #eef3f8; }
 .auth-card { width: min(460px, 100%); padding: 44px; background: white; border: 1px solid var(--line); box-shadow: 0 24px 70px rgba(20,33,58,.12); }
@@ -625,3 +637,4 @@
 .turnstile-container { min-height: 70px; margin-top: 22px; }.contact-submit { width: 100%; margin-top: 18px; padding: 14px 20px; border: 0; color: white; background: var(--blue); cursor: pointer; font-weight: 700; }.contact-submit:disabled { cursor: not-allowed; opacity: .5; }.contact-status { margin: 16px 0 0; padding: 12px 14px; }.contact-status.success { color: #075f3d; background: #e7f8ef; }.contact-status.error { color: #8f1d2c; background: #fff0f2; }
 .message-inbox { width: min(960px, calc(100% - 40px)); margin: 0 auto; padding: 40px 0 80px; }.inbox-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }.inbox-heading h2, .inbox-heading p { margin: 0; }.inbox-heading p { margin-top: 4px; color: #68778b; }.inbox-heading button { padding: 9px 13px; border: 1px solid #aebccc; background: white; }.message-list { display: grid; gap: 14px; }.message-card { padding: 22px; border: 1px solid var(--line); background: white; }.message-card.new { border-left: 4px solid var(--blue); }.message-card.archived { opacity: .65; }.message-card header, .message-card footer { display: flex; justify-content: space-between; gap: 18px; }.message-card header div { display: grid; gap: 3px; }.message-card time { color: #6b788b; font-size: .8rem; }.message-card dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 18px 0; }.message-card dt { color: #68778b; }.message-card dd { margin: 0; }.message-card > p { padding: 16px; white-space: pre-wrap; line-height: 1.6; background: #f5f7fa; }.message-card footer { align-items: center; margin-top: 18px; }.message-card footer select, .message-card footer button { padding: 8px 11px; border: 1px solid #aebccc; background: white; }.message-card footer .danger-action { color: #9d2634; }
 @media (max-width: 760px) { .contact-page { grid-template-columns: 1fr; width: min(100% - 32px, 680px); padding: 48px 0; }.contact-intro { position: static; }.contact-grid { grid-template-columns: 1fr; }.contact-message { grid-column: auto; } }
+@media (max-width: 900px) { .lab-access-page { grid-template-columns: 1fr; }.lab-access-intro h1 { max-width: 760px; }.lab-registration-panel { width: min(100%, 720px); } }

@@ -8,8 +8,6 @@ const navigation = [
   { label: 'Contact', href: '/contact' },
 ]
 
-const labAccessUrl = 'ssh://adrian@100.76.5.32'
-
 export function Header({ onNavigate }) {
   const { status, data } = useApiResource('about')
 
@@ -32,7 +30,7 @@ export function Header({ onNavigate }) {
             {item.label}
           </NavLink>
         ))}
-        <a className="lab-access-link" href={labAccessUrl}>Access Lab</a>
+        <NavLink className="lab-access-link" href="/access-lab" onNavigate={onNavigate}>Access Lab</NavLink>
         <NavLink className="login-link" href="/studio" onNavigate={onNavigate}>Login</NavLink>
       </nav>
     </header>
