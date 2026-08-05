@@ -30,7 +30,7 @@ export function Header({ onNavigate }) {
             {item.label}
           </NavLink>
         ))}
-        <NavLink className="lab-access-link" href="/access-lab" onNavigate={onNavigate}>Access Lab</NavLink>
+        <a className="lab-access-link" href="https://networking-lab.tailf2eaa0.ts.net/labrequest">Access Lab</a>
         <NavLink className="login-link" href="/studio" onNavigate={onNavigate}>Login</NavLink>
       </nav>
     </header>
