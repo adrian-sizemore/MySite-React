@@ -593,6 +593,7 @@
   }
 }
 
+.lab-access-link { color: var(--blue-dark) !important; }
 .login-link { border: 1px solid var(--navy); border-radius: 999px; padding: 7px 14px; text-decoration: none; }
 .auth-page, .studio-loading { min-height: 100vh; display: grid; place-items: center; padding: 28px; background: #eef3f8; }
 .auth-card { width: min(460px, 100%); padding: 44px; background: white; border: 1px solid var(--line); box-shadow: 0 24px 70px rgba(20,33,58,.12); }
