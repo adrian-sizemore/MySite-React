@@ -25,6 +25,7 @@ export function Header({ onNavigate }) {
             {data.opportunity_chip_text || 'Currently looking for new and exciting opportunities'}
           </span>
         )}
+        <a className="home-link" href="https://adriansizemore.net/">Home</a>
         {navigation.map((item) => (
           <NavLink key={item.href} href={item.href} onNavigate={onNavigate}>
             {item.label}
