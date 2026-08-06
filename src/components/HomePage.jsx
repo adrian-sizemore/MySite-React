@@ -88,10 +88,6 @@ export function HomePage({ onNavigate }) {
               <p>{identity.certification}</p>
               <strong>{identity.certificationNumber}</strong>
               <p className="tagline">{identity.tagline}</p>
-              <NavLink className="resume-link" href="/resume" onNavigate={onNavigate}>
-                <span className="download-icon" aria-hidden="true">↓</span>
-                Download PDF
-              </NavLink>
             </div>
             <CareerTimeline />
           </div>
