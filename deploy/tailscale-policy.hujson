@@ -32,6 +32,13 @@
       "dst": ["100.76.5.32"],
       "ip": ["tcp:443"],
     },
+    // Tailnet members with portal-issued credentials can reach only the
+    // restricted guest SSH entry point on the lab VM.
+    {
+      "src": ["autogroup:member"],
+      "dst": ["100.76.5.32"],
+      "ip": ["tcp:8022"],
+    },
   ],
 
   "ssh": [
