@@ -25,9 +25,10 @@
       "dst": ["tag:resume-api"],
       "ip": ["tcp:8080"],
     },
-    // Tailnet members can open the lab portal through Tailscale Serve.
+    // The public resume EC2 host is the only client allowed to proxy the
+    // lab portal through Tailscale Serve. The lab VM remains tailnet-only.
     {
-      "src": ["autogroup:member"],
+      "src": ["tag:react-ec2"],
       "dst": ["100.76.5.32"],
       "ip": ["tcp:443"],
     },
