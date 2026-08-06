@@ -10,6 +10,7 @@ services:
       NGINX_ENVSUBST_FILTER: "BACKEND_ORIGIN"
     volumes:
       - ./site:/usr/share/nginx/html:ro
+      - ./landing:/usr/share/nginx/landing:ro
       - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]

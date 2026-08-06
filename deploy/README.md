@@ -1,7 +1,11 @@
-# Private API deployment
+# Landing and About-site deployment
 
 Production EC2 target: `ec2-user@100.112.25.79` (Tailscale). Use this address
 for deployment and verification instead of the instance's public hostname.
+
+The same nginx container serves the personal landing page at
+`adriansizemore.net`, the React résumé at `about.adriansizemore.net`, and a
+permanent redirect from the former `resume.adriansizemore.net` hostname.
 
 The browser calls same-origin `/api/v1/*` URLs. Public content endpoints are
 read-only. The private `/api/v1/admin/token/*` and `/api/v1/studio/*` routes use
@@ -78,14 +82,19 @@ whose claims prove both password and authenticator verification.
 
 ## 4. Verify the boundary
 
-From EC2, verify the public proxy and one blocked route:
+From EC2, verify the landing page, About site, API, and legacy redirect:
 
 ```shell
-curl --fail --show-error http://127.0.0.1:8080/api/v1/resume/
-curl --fail --show-error http://127.0.0.1:8080/
-curl --output /dev/null --silent --write-out '%{http_code}\n' \
-  http://127.0.0.1:8080/admin/
+curl --fail --show-error --header 'Host: adriansizemore.net' \
+  http://127.0.0.1:8080/
+curl --fail --show-error --header 'Host: about.adriansizemore.net' \
+  http://127.0.0.1:8080/
+curl --fail --show-error --header 'Host: about.adriansizemore.net' \
+  http://127.0.0.1:8080/api/v1/resume/
+curl --head --header 'Host: resume.adriansizemore.net' \
+  http://127.0.0.1:8080/
 ```
 
-The final command must print `404`. From another tailnet device, a direct
+The final command must return `301` with a location under
+`https://about.adriansizemore.net`. From another tailnet device, a direct
 connection to the backend's port 8080 must fail.
