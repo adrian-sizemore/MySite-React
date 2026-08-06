@@ -25,6 +25,12 @@
       "dst": ["tag:resume-api"],
       "ip": ["tcp:8080"],
     },
+    // Tailnet members can open the lab portal through Tailscale Serve.
+    {
+      "src": ["autogroup:member"],
+      "dst": ["100.76.5.32"],
+      "ip": ["tcp:443"],
+    },
   ],
 
   "ssh": [
