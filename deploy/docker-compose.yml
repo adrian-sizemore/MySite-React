@@ -1,0 +1,20 @@
+services:
+  site:
+    image: nginx:1.27-alpine
+    container_name: external-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    environment:
+      BACKEND_ORIGIN: "${BACKEND_ORIGIN:?Set BACKEND_ORIGIN in deploy/.env}"
+      NGINX_ENVSUBST_FILTER: "BACKEND_ORIGIN"
+    volumes:
+      - ./site:/usr/share/nginx/html:ro
+      - ./landing:/usr/share/nginx/landing:ro
+      - ./nginx.conf:/etc/nginx/templates/default.conf.template:ro
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1/"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

@@ -1,0 +1,423 @@
+.detail-page {
+  min-height: calc(100vh - 74px);
+  padding: 52px clamp(28px, 8vw, 130px) 80px;
+}
+
+.detail-heading {
+  max-width: 1040px;
+  margin: 0 auto 46px;
+}
+
+.detail-heading > a {
+  display: inline-block;
+  margin-bottom: 28px;
+  font-size: 0.88rem;
+  font-weight: 650;
+}
+
+.detail-heading h1 {
+  color: var(--ink);
+  font-size: clamp(2.7rem, 5vw, 5rem);
+  letter-spacing: -0.055em;
+}
+
+
+.status-panel,
+.detail-stack,
+.timeline-list,
+.military-list,
+.project-grid,
+.resume-view {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.status-panel {
+  padding: 42px;
+  background: var(--blue-soft);
+  border: 1px solid #cfe0f5;
+}
+
+.status-panel button {
+  padding: 10px 18px;
+  color: #fff;
+  background: var(--blue);
+  border: 0;
+  cursor: pointer;
+}
+
+.loading-line {
+  width: 70%;
+  height: 13px;
+  display: block;
+  margin-bottom: 12px;
+  background: #d4e3f5;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+.loading-line.short {
+  width: 44%;
+}
+
+@keyframes pulse {
+  50% { opacity: 0.45; }
+}
+
+.detail-lead {
+  margin-bottom: 42px;
+  padding: 34px;
+  background: #f1f6fc;
+  border-left: 3px solid var(--blue);
+}
+
+.detail-lead p {
+  color: var(--navy);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.detail-grid,
+.project-grid,
+.skill-grid,
+.fact-grid,
+.accomplishment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 20px;
+}
+
+.detail-card,
+.project-card,
+.military-list > * {
+  padding: 30px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--blue-dark);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.detail-card h2,
+.project-card h2,
+.military-list h2 {
+  color: var(--ink);
+}
+
+.detail-card p,
+.project-card p,
+.role p,
+.military-list p {
+  color: var(--navy);
+  line-height: 1.65;
+}
+
+.summary,
+.role-summary {
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+
+.role {
+  border-top: 1px solid var(--line);
+}
+
+.role:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.role-summary-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 30px 2px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.role-summary-row::-webkit-details-marker {
+  display: none;
+}
+
+.role-summary-row:hover h2,
+.role-summary-row:focus-visible h2 {
+  color: var(--blue-dark);
+}
+
+.role-summary-row:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 5px;
+}
+
+.role h2 {
+  margin-bottom: 14px;
+  color: var(--ink);
+  font-size: 1.9rem;
+  transition: color 160ms ease;
+}
+
+.role-intro {
+  max-width: 780px;
+}
+
+.role-intro .role-summary {
+  margin: 0;
+}
+
+.role-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-top: 3px;
+}
+
+.date-range {
+  margin: 0;
+  white-space: nowrap;
+  font-weight: 650;
+}
+
+.role-toggle {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  margin: 4px 3px 0 0;
+  border-top: 2px solid var(--blue-dark);
+  border-right: 2px solid var(--blue-dark);
+  transform: rotate(45deg);
+  transition: transform 180ms ease;
+}
+
+.role[open] .role-toggle {
+  transform: rotate(135deg);
+}
+
+.role-details {
+  padding: 0 2px 38px;
+  border-top: 1px solid #e9eef5;
+}
+
+.role-sections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 32px;
+  margin-top: 30px;
+}
+
+.role-sections h3,
+.accomplishment h3 {
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 1rem;
+}
+
+.accomplishment-grid {
+  margin-top: 28px;
+}
+
+.accomplishment {
+  padding: 22px;
+  background: #f1f6fc;
+}
+
+.accomplishment > strong {
+  display: block;
+  color: var(--blue-dark);
+  font-size: 1.9rem;
+}
+
+.accomplishment > span,
+.accomplishment small {
+  display: block;
+  color: #53627a;
+}
+
+.military-list,
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 22px;
+}
+
+.project-card dl {
+  margin-bottom: 0;
+}
+
+.project-card dt {
+  margin-top: 18px;
+  color: var(--ink);
+  font-weight: 750;
+}
+
+.project-card dd {
+  margin: 5px 0 0;
+  color: var(--navy);
+  line-height: 1.55;
+}
+
+.expandable-card > summary,
+.fact > summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.expandable-card > summary::-webkit-details-marker,
+.fact > summary::-webkit-details-marker {
+  display: none;
+}
+
+.expandable-card[open] > summary .role-toggle,
+.fact[open] > summary .role-toggle {
+  transform: rotate(135deg);
+}
+
+.expandable-card summary:hover h2,
+.expandable-card summary:hover h3 {
+  color: var(--blue-dark);
+}
+
+.expandable-content {
+  margin-top: 22px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+
+.resume-download {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+  padding: 20px 24px;
+  color: var(--navy);
+  background: #f1f6fc;
+  border-left: 3px solid var(--blue);
+}
+
+.resume-download strong,
+.resume-download span {
+  display: block;
+}
+
+.resume-download a {
+  flex: 0 0 auto;
+  padding: 11px 16px;
+  color: #fff;
+  background: var(--blue-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.resume-download-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resume-download-actions a:first-child {
+  color: var(--blue-dark);
+  background: #fff;
+  border: 1px solid #b8cbe3;
+}
+
+.resume-download-actions a:first-child:hover {
+  color: #fff;
+  background: var(--blue);
+}
+
+.resume-download a:hover {
+  background: var(--blue);
+}
+
+.resume-download small {
+  margin-left: 6px;
+  opacity: 0.72;
+}
+
+.section-heading {
+  margin: 58px 0 20px;
+  color: var(--ink);
+  font-size: 2.1rem;
+}
+
+.skill-grid,
+.fact-grid {
+  margin: 0 auto;
+}
+
+.skill-grid section,
+.fact-grid section,
+.skill-grid > details {
+  padding: 26px;
+  border-top: 2px solid var(--blue);
+  background: #f8fafc;
+}
+
+.skill-grid li {
+  margin-bottom: 6px;
+}
+
+.fact {
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.fact strong,
+.fact span,
+.fact small {
+  display: block;
+}
+
+.fact > small {
+  padding-top: 9px;
+}
+
+@media (max-width: 760px) {
+  .detail-grid,
+  .project-grid,
+  .military-list,
+  .skill-grid,
+  .fact-grid,
+  .role-sections,
+  .accomplishment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .role-summary-row {
+    display: block;
+  }
+
+  .role-meta {
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .date-range {
+    white-space: normal;
+  }
+
+  .resume-download {
+    display: block;
+  }
+
+  .resume-download a {
+    display: inline-block;
+    margin-top: 16px;
+  }
+
+  .resume-download-actions {
+    display: block;
+  }
+}

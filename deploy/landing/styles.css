@@ -1,0 +1,509 @@
+:root {
+  color-scheme: light;
+  font-family: Georgia, "Times New Roman", serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --espresso: #171009;
+  --espresso-soft: #25190f;
+  --ink: #2b2117;
+  --cream: #eee5d3;
+  --cream-deep: #e7dbc4;
+  --brass: #aa8236;
+  --brass-light: #d0aa59;
+  --navy: #07182b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #0d0906;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background: #0d0906;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.page-shell {
+  width: min(1800px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--cream);
+  box-shadow: 0 0 70px rgba(0, 0, 0, .42);
+}
+
+.site-header {
+  min-height: 100px;
+  padding: 18px clamp(28px, 4vw, 62px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  position: relative;
+  color: #eadab9;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.018), transparent 28%, rgba(0,0,0,.08)),
+    repeating-linear-gradient(110deg, rgba(255,255,255,.018) 0 1px, transparent 1px 5px),
+    var(--espresso);
+  border-top: 4px solid #080503;
+  border-bottom: 2px solid #050302;
+  box-shadow: inset 0 -6px 0 #24170d, inset 0 -8px 0 rgba(176, 132, 55, .65);
+}
+
+.site-header::before,
+.site-header::after {
+  content: "";
+  height: 2px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: repeating-linear-gradient(90deg, #c09343 0 7px, #76511e 7px 11px);
+  opacity: .72;
+}
+
+.site-header::before { top: 4px; }
+.site-header::after { bottom: 6px; }
+
+.site-name {
+  margin: 0;
+  color: #ebdab5;
+  font-size: clamp(1.9rem, 3vw, 3.1rem);
+  line-height: 1;
+  letter-spacing: -.025em;
+}
+
+.learn-more {
+  min-width: 258px;
+  padding: 15px 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  color: #ead8ae;
+  background: rgba(0, 0, 0, .16);
+  border: 1px solid var(--brass-light);
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 3px rgba(0,0,0,.22), 0 7px 18px rgba(0,0,0,.16);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: .98rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+
+.learn-more:hover {
+  color: #fff2d1;
+  background: rgba(170, 130, 54, .16);
+  transform: translateY(-1px);
+}
+
+.learn-more:focus-visible {
+  outline: 3px solid #f1c86f;
+  outline-offset: 4px;
+}
+
+.hero {
+  min-height: clamp(390px, 42vw, 535px);
+  display: grid;
+  align-items: end;
+  position: relative;
+  isolation: isolate;
+  color: #f5eddd;
+  background-image: url("assets/golf-surf-hero-augusta.webp");
+  background-position: center center;
+  background-size: cover;
+  border-bottom: 5px solid #22170e;
+}
+
+.hero::after {
+  content: "";
+  height: 4px;
+  position: absolute;
+  z-index: 3;
+  inset: auto 0 0;
+  background: repeating-linear-gradient(90deg, #d0aa59 0 8px, #684615 8px 12px);
+  opacity: .82;
+}
+
+.hero-shade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(15, 10, 6, .88) 0%, rgba(15, 10, 6, .58) 28%, transparent 62%),
+    linear-gradient(0deg, rgba(12, 8, 5, .18), transparent 48%);
+}
+
+.hero-copy {
+  width: min(680px, calc(100% - 44px));
+  margin: 0 0 clamp(54px, 7vw, 94px) clamp(28px, 5.5vw, 92px);
+  text-shadow: 0 3px 16px rgba(0, 0, 0, .7);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(3.1rem, 6vw, 5.7rem);
+  font-weight: 400;
+  line-height: .95;
+  letter-spacing: -.025em;
+  text-transform: uppercase;
+}
+
+.hero p {
+  margin: 16px 0 0;
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.ornament {
+  width: min(550px, 100%);
+  margin-top: 19px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 14px;
+  color: #d5b66d;
+}
+
+.ornament span {
+  height: 1px;
+  background: linear-gradient(90deg, #e1c47c, rgba(225,196,124,.45));
+}
+
+.ornament span:last-child {
+  background: linear-gradient(90deg, rgba(225,196,124,.45), #e1c47c);
+}
+
+.ornament i {
+  font-size: .7rem;
+  font-style: normal;
+}
+
+.chapters {
+  display: grid;
+  grid-template-columns: 1.05fr .9fr 1fr 1.06fr;
+  position: relative;
+  background:
+    repeating-linear-gradient(105deg, rgba(83,59,30,.014) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, #f1eadc, var(--cream));
+}
+
+.chapter {
+  min-width: 0;
+  min-height: 445px;
+  padding: 28px clamp(22px, 2.4vw, 42px) 35px;
+  position: relative;
+  text-align: center;
+}
+
+.chapter + .chapter {
+  border-left: 1px solid rgba(170, 130, 54, .7);
+}
+
+.chapter h2 {
+  margin: 0;
+  color: #3d2d1d;
+  font-size: 1.28rem;
+  font-weight: 400;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.heading-rule {
+  width: 124px;
+  margin: 10px auto 16px;
+  display: grid;
+  grid-template-columns: 1fr 7px 1fr;
+  align-items: center;
+}
+
+.heading-rule span {
+  height: 1px;
+  background: rgba(170, 130, 54, .75);
+}
+
+.heading-rule i {
+  width: 7px;
+  height: 7px;
+  display: block;
+  background: var(--brass);
+  transform: rotate(45deg);
+}
+
+.career-content {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+}
+
+.ccie-lockup {
+  width: 145px;
+  height: 116px;
+  overflow: hidden;
+}
+
+.ccie-lockup img {
+  width: 145px;
+  height: 145px;
+  object-fit: cover;
+  object-position: center 35%;
+  mix-blend-mode: multiply;
+  filter: contrast(1.06) saturate(.92);
+}
+
+.company {
+  width: min(220px, 100%);
+}
+
+.company img {
+  width: auto;
+  max-width: 178px;
+  height: 39px;
+  margin: 0 auto 4px;
+}
+
+.company .verizon-logo {
+  height: 31px;
+}
+
+.company p,
+.service-item p {
+  margin: 0;
+  font-size: .98rem;
+  line-height: 1.35;
+}
+
+.company span,
+.service-item span {
+  color: var(--brass);
+}
+
+.service-list {
+  display: grid;
+  gap: 11px;
+}
+
+.service-item {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+}
+
+.service-item img {
+  width: 132px;
+  height: 132px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 5px rgba(63, 40, 17, .18));
+}
+
+.community-content {
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service-star {
+  margin: 5px 0 22px;
+  color: #b88a31;
+  font-size: 2rem;
+  line-height: 1;
+  text-shadow: 0 1px 0 #684511, 0 2px 3px rgba(0,0,0,.22);
+}
+
+.post-name {
+  margin: 0;
+  color: #372719;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.leather-nameplate {
+  width: min(220px, 85%);
+  height: 39px;
+  margin: 17px auto;
+  display: grid;
+  place-items: center;
+  position: relative;
+  color: #c09a51;
+  background: linear-gradient(180deg, #725029, #4a2f16 60%, #35200f);
+  border: 2px solid #2b1b0d;
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 2px #8d6935, inset 0 0 10px #1f1208, 0 3px 4px rgba(0,0,0,.25);
+}
+
+.leather-nameplate::before,
+.leather-nameplate::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  background: radial-gradient(circle at 35% 30%, #d0aa59, #6a451b 60%, #2d1b0c);
+  transform: translateY(-50%);
+}
+
+.leather-nameplate::before { left: 10px; }
+.leather-nameplate::after { right: 10px; }
+
+.leather-nameplate span {
+  font-size: .65rem;
+}
+
+.location {
+  margin: 0;
+  font-size: 1.12rem;
+  font-style: italic;
+}
+
+.service-star.lower {
+  margin: auto 0 0;
+}
+
+.orioles {
+  padding-bottom: 0;
+  overflow: hidden;
+  background: #281711;
+}
+
+.orioles h2 {
+  color: #efe1c3;
+}
+
+.orioles .heading-rule span {
+  background: rgba(220, 184, 108, .72);
+}
+
+.orioles-photo {
+  min-height: 363px;
+  margin: 0 calc(clamp(22px, 2.4vw, 42px) * -1);
+  position: relative;
+  background-image:
+    linear-gradient(180deg, rgba(20, 9, 5, .12), transparent 30%),
+    url("assets/camden-yards.webp");
+  background-position: center center;
+  background-size: cover;
+}
+
+.orioles-logo {
+  width: clamp(76px, 7vw, 118px);
+  height: auto;
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  filter: drop-shadow(0 4px 5px rgba(0,0,0,.85));
+}
+
+@media (max-width: 1050px) {
+  .chapters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chapter {
+    min-height: 430px;
+  }
+
+  .chapter:nth-child(3) {
+    border-left: 0;
+  }
+
+  .chapter:nth-child(n + 3) {
+    border-top: 1px solid rgba(170, 130, 54, .7);
+  }
+
+  .orioles-photo {
+    min-height: 345px;
+  }
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    min-height: 86px;
+    padding-inline: 20px;
+  }
+
+  .site-name {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+  }
+
+  .learn-more {
+    min-width: 0;
+    padding: 12px 15px;
+    font-size: .74rem;
+    letter-spacing: .1em;
+  }
+
+  .hero {
+    min-height: 470px;
+    background-position: 58% center;
+  }
+
+  .hero-shade {
+    background: linear-gradient(90deg, rgba(15,10,6,.84), rgba(15,10,6,.32) 70%, transparent);
+  }
+
+  .hero-copy {
+    width: calc(100% - 40px);
+    margin: 0 20px 58px;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 15vw, 4.5rem);
+  }
+
+  .hero p {
+    max-width: 320px;
+  }
+
+  .chapters {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter {
+    min-height: auto;
+    padding: 30px 24px 38px;
+  }
+
+  .chapter + .chapter {
+    border-top: 1px solid rgba(170, 130, 54, .7);
+    border-left: 0;
+  }
+
+  .community-content {
+    min-height: 320px;
+  }
+
+  .orioles {
+    min-height: 510px;
+  }
+
+  .orioles-photo {
+    min-height: 420px;
+    margin: 0 -24px -38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .learn-more {
+    transition: none;
+  }
+}

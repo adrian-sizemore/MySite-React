@@ -1,0 +1,58 @@
+{
+  // This is the policy deployed to the tailnet. Do not add a broad * -> * grant;
+  // grants are additive and a broad rule would bypass the API restriction.
+  "tagOwners": {
+    "tag:react-ec2": ["autogroup:admin"],
+    "tag:resume-api": ["autogroup:admin"],
+  },
+
+  "grants": [
+    // Preserve connectivity among devices owned by the same signed-in user.
+    {
+      "src": ["autogroup:member"],
+      "dst": ["autogroup:self"],
+      "ip": ["*"],
+    },
+    // Preserve administrator SSH access to the two tagged servers.
+    {
+      "src": ["autogroup:admin"],
+      "dst": ["100.112.25.79", "tag:react-ec2", "tag:resume-api"],
+      "ip": ["tcp:22"],
+    },
+    // EC2 is the only device allowed to call the backend API port.
+    {
+      "src": ["tag:react-ec2"],
+      "dst": ["tag:resume-api"],
+      "ip": ["tcp:8080"],
+    },
+    // The public resume EC2 host is the only client allowed to proxy the
+    // lab portal through Tailscale Serve. The lab VM remains tailnet-only.
+    {
+      "src": ["tag:react-ec2"],
+      "dst": ["100.76.5.32"],
+      "ip": ["tcp:443"],
+    },
+    // Tailnet members with portal-issued credentials can reach only the
+    // restricted guest SSH entry point on the lab VM.
+    {
+      "src": ["autogroup:member"],
+      "dst": ["100.76.5.32"],
+      "ip": ["tcp:8022"],
+    },
+  ],
+
+  "ssh": [
+    {
+      "action": "check",
+      "src": ["autogroup:member"],
+      "dst": ["autogroup:self"],
+      "users": ["autogroup:nonroot", "root"],
+    },
+    {
+      "action": "check",
+      "src": ["autogroup:admin"],
+      "dst": ["tag:react-ec2", "tag:resume-api"],
+      "users": ["autogroup:nonroot", "root"],
+    },
+  ],
+}
